@@ -1,0 +1,1 @@
+"""A non-exhaustive assortment of utilities for the hikari Discord API wrapper."""
