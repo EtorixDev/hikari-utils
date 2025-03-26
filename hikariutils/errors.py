@@ -20,3 +20,7 @@ class MandatoryChannelNotFound(HikariUtilsError):
 
 class MandatoryRoleNotFound(HikariUtilsError):
     """Exception raised when a role is needed but couldn't be found in the cache or fetched from Discord."""
+
+
+class MandatoryEmojiNotFound(HikariUtilsError):
+    """Exception raised when an emoji is needed but couldn't be found in the cache or fetched from Discord."""

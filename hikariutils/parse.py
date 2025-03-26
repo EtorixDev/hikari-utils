@@ -3,19 +3,10 @@ import typing
 from datetime import timedelta, timezone
 
 import dateparser
-import hikari
 import whenever
 
 from hikariutils.constants import UNIX_EPOCH
 from hikariutils.convert import snowflake_to_datetime
-
-
-def emoji(emoji_mention: str) -> hikari.Emoji | None:
-    """Parse an emoji mention or Unicode emoji into an Emoji object."""
-    try:
-        return hikari.Emoji.parse(emoji_mention)
-    except ValueError:
-        return None
 
 
 def is_float(term: str) -> bool:

@@ -1,8 +1,9 @@
 import typing
 
+import emoji
 import hikari
 
-from hikariutils.errors import MandatoryChannelNotFound, MandatoryGuildNotFound, MandatoryMemberNotFound, MandatoryRoleNotFound, MandatoryUserNotFound
+from hikariutils.errors import MandatoryChannelNotFound, MandatoryEmojiNotFound, MandatoryGuildNotFound, MandatoryMemberNotFound, MandatoryRoleNotFound, MandatoryUserNotFound
 
 
 class Optional:
@@ -68,6 +69,11 @@ class Optional:
     async def booster_role(bot: hikari.GatewayBot, guild: int | hikari.Guild) -> hikari.Role | None:
         """Retrieve the booster role for a guild. If not found, fetch it from Discord. Return None if still not found."""
         return await _booster_role(bot, guild, mandatory=False)
+
+    @staticmethod
+    async def emoji(bot: hikari.GatewayBot, emoji_id: int | str | hikari.Emoji, guild: int | hikari.Guild | None = None) -> hikari.Emoji | None:
+        """Retrieve an emoji from the cache. If not found, fetch it from Discord. Return None if still not found."""
+        return await _emoji(bot, emoji_id, guild, mandatory=False)
 
 
 class Mandatory:
@@ -182,6 +188,16 @@ class Mandatory:
             raise MandatoryRoleNotFound
 
         return resolved_role
+
+    @staticmethod
+    async def emoji(bot: hikari.GatewayBot, emoji_id: int | str | hikari.Emoji, guild: int | hikari.Guild | None) -> hikari.Emoji:
+        """Retrieve an emoji from the cache. If not found, fetch it from Discord. Raise an exception if still not found."""
+        resolved_emoji = await _emoji(bot, emoji_id, guild, mandatory=True)
+
+        if not resolved_emoji:
+            raise MandatoryEmojiNotFound
+
+        return resolved_emoji
 
 
 async def _guild(bot: hikari.GatewayBot, guild: int | hikari.Guild | None, mandatory: bool = False) -> hikari.Guild | None:
@@ -349,3 +365,35 @@ async def _booster_role(bot: hikari.GatewayBot, guild: int | hikari.Guild, manda
         raise MandatoryRoleNotFound
 
     return resolved_role
+
+
+async def _emoji(bot: hikari.GatewayBot, emoji_id: int | str | hikari.Emoji, guild: int | hikari.Guild | None = None, mandatory: bool = False) -> hikari.Emoji | None:
+    try:
+        resolved_emoji = None
+
+        if isinstance(emoji_id, hikari.Emoji):
+            resolved_emoji = emoji_id
+        elif isinstance(emoji_id, str):
+            if emoji_id in emoji.EMOJI_DATA:
+                resolved_emoji = hikari.UnicodeEmoji.parse(emoji_id)
+            else:
+                try:
+                    resolved_emoji = hikari.CustomEmoji.parse(emoji_id)
+                except ValueError:
+                    pass
+        else:
+            try:
+                if (unicode_char := chr(emoji_id)) in emoji.EMOJI_DATA:
+                    resolved_emoji = hikari.UnicodeEmoji.parse(unicode_char)
+            except ValueError:
+                resolved_emoji = bot.cache.get_emoji(emoji_id)
+
+                if not resolved_emoji and guild:
+                    resolved_emoji = await bot.rest.fetch_emoji(guild, emoji_id)
+    except hikari.NotFoundError:
+        resolved_emoji = None
+
+    if not resolved_emoji and mandatory:
+        raise MandatoryRoleNotFound
+
+    return resolved_emoji
