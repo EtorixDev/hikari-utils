@@ -41,7 +41,7 @@ class Optional:
         return await _boosters(bot, guild, mandatory=False)
 
     @staticmethod
-    async def channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel) -> hikari.GuildChannel | hikari.GuildThreadChannel | None:
+    async def channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel) -> hikari.PermissibleGuildChannel | hikari.GuildThreadChannel | None:
         """Retrieve a guild channel from the cache. If not found, fetch it from Discord. Return None if still not found."""
         return await _channel(bot, channel, mandatory=False)
 
@@ -130,7 +130,7 @@ class Mandatory:
         return resolved_boosters
 
     @staticmethod
-    async def channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel) -> hikari.GuildChannel | hikari.GuildThreadChannel:
+    async def channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel) -> hikari.PermissibleGuildChannel | hikari.GuildThreadChannel:
         """Retrieve a guild channel from the cache. If not found, fetch it from Discord. Raise an exception if still not found."""
         resolved_channel = await _channel(bot, channel, mandatory=True)
 
@@ -270,13 +270,13 @@ async def _boosters(bot: hikari.GatewayBot, guild: int | hikari.Guild, mandatory
     return resolved_boosters
 
 
-async def _channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel, mandatory: bool = False) -> hikari.GuildChannel | hikari.GuildThreadChannel | None:
+async def _channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel, mandatory: bool = False) -> hikari.PermissibleGuildChannel | hikari.GuildThreadChannel | None:
     try:
         resolved_channel = bot.cache.get_guild_channel(channel) or bot.cache.get_thread(channel) or (await bot.rest.fetch_channel(channel))
     except hikari.NotFoundError:
         resolved_channel = None
 
-    if (not resolved_channel and mandatory) or (resolved_channel and not isinstance(resolved_channel, hikari.GuildChannel)):
+    if (not resolved_channel and mandatory) or (resolved_channel and not isinstance(resolved_channel, (hikari.PermissibleGuildChannel, hikari.GuildThreadChannel))):
         raise MandatoryChannelNotFound
 
     return resolved_channel
