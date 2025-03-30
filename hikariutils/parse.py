@@ -18,7 +18,7 @@ def is_float(term: str) -> bool:
         return False
 
 
-def human_time(date_and_time: str) -> tuple[float, int, int, str, str] | None:
+def human_time(date_and_time: str) -> tuple[float, int, int, str, str] | tuple[None, None, None, None, None]:
     """Find the timestamp and timezone information for a human time representation."""
     try:
         tz_name: str | None = None
@@ -40,7 +40,7 @@ def human_time(date_and_time: str) -> tuple[float, int, int, str, str] | None:
                 target_date = dateparser.parse(date_and_time)
 
                 if not target_date or target_date.tzname() is None or target_date.utcoffset() is None:
-                    return None
+                    return (None, None, None, None, None)
 
                 tz_name = target_date.tzname()
 
@@ -59,7 +59,7 @@ def human_time(date_and_time: str) -> tuple[float, int, int, str, str] | None:
             target_timezone_offset = "+00:00"
 
         if not target_date:
-            return None
+            return (None, None, None, None, None)
 
         # Content Output Display
         target_date_timestamp = target_date.timestamp() - UNIX_EPOCH.timestamp_millis()
@@ -68,4 +68,4 @@ def human_time(date_and_time: str) -> tuple[float, int, int, str, str] | None:
 
         return (target_date_timestamp, target_date_unix, difference_in_seconds, target_timezone_name, target_timezone_offset)
     except Exception:
-        return None
+        return (None, None, None, None, None)
