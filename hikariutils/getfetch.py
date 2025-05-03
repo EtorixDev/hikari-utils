@@ -10,9 +10,9 @@ class Optional:
     """Retrieve an object from the cache or fetch it from Discord if not found. Return None if still not found."""
 
     @staticmethod
-    async def guild(bot: hikari.GatewayBot, guild: int | hikari.Guild | None) -> hikari.Guild | None:
+    async def guild(bot: hikari.GatewayBot, guild: int | hikari.Guild | None, cache: bool = True) -> hikari.Guild | None:
         """Retrieve a guild from the cache. If not found, fetch it from Discord. Return None if still not found."""
-        guild = await _guild(bot, guild, mandatory=False)
+        guild = await _guild(bot, guild, mandatory=False, cache=cache)
         return guild
 
     @staticmethod
@@ -21,68 +21,68 @@ class Optional:
         return await _ban(bot, guild, member)
 
     @staticmethod
-    async def user(bot: hikari.GatewayBot, user: int | hikari.User) -> hikari.User | None:
+    async def user(bot: hikari.GatewayBot, user: int | hikari.User, cache: bool = True) -> hikari.User | None:
         """Retrieve a user from the cache. If not found, fetch it from Discord. Return None if still not found."""
-        return await _user(bot, user, mandatory=False)
+        return await _user(bot, user, mandatory=False, cache=cache)
 
     @staticmethod
-    async def member(bot: hikari.GatewayBot, guild: int | hikari.Guild, user: int | hikari.User) -> hikari.Member | None:
+    async def member(bot: hikari.GatewayBot, guild: int | hikari.Guild, user: int | hikari.User, cache: bool = True) -> hikari.Member | None:
         """Retrieve a member from the cache. If not found, fetch it from Discord. Return None if still not found."""
-        return await _member(bot, guild, user, mandatory=False)
+        return await _member(bot, guild, user, mandatory=False, cache=cache)
 
     @staticmethod
-    async def members(bot: hikari.GatewayBot, guild: int | hikari.Guild) -> typing.Iterable[hikari.Member] | None:
+    async def members(bot: hikari.GatewayBot, guild: int | hikari.Guild, cache: bool = True) -> typing.Iterable[hikari.Member] | None:
         """Retrieve members from the cache. If not found, fetch them from Discord. Return None if still not found."""
-        return await _members(bot, guild, mandatory=False)
+        return await _members(bot, guild, mandatory=False, cache=cache)
 
     @staticmethod
-    async def boosters(bot: hikari.GatewayBot, guild: int | hikari.Guild) -> list[hikari.Member] | None:
+    async def boosters(bot: hikari.GatewayBot, guild: int | hikari.Guild, cache: bool = True) -> list[hikari.Member] | None:
         """Retrieve boosters for a guild from the cache. If not found, fetch them from Discord. Return None if still not found."""
-        return await _boosters(bot, guild, mandatory=False)
+        return await _boosters(bot, guild, mandatory=False, cache=cache)
 
     @staticmethod
-    async def channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel) -> hikari.PermissibleGuildChannel | hikari.GuildThreadChannel | None:
+    async def channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel, cache: bool = True) -> hikari.PermissibleGuildChannel | hikari.GuildThreadChannel | None:
         """Retrieve a guild channel from the cache. If not found, fetch it from Discord. Return None if still not found."""
-        return await _channel(bot, channel, mandatory=False)
+        return await _channel(bot, channel, mandatory=False, cache=cache)
 
     @staticmethod
-    async def channels(bot: hikari.GatewayBot, guild: int | hikari.Guild, channel_type: hikari.ChannelType | None = None) -> typing.Iterable[hikari.GuildChannel] | None:
+    async def channels(bot: hikari.GatewayBot, guild: int | hikari.Guild, channel_type: hikari.ChannelType | None = None, cache: bool = True) -> typing.Iterable[hikari.GuildChannel] | None:
         """Retrieve guild channels from the cache. If not found, fetch them from Discord. Optionally filters by channel type. Return None if still not found."""
-        return await _channels(bot, guild, channel_type, mandatory=False)
+        return await _channels(bot, guild, channel_type, mandatory=False, cache=cache)
 
     @staticmethod
-    async def role(bot: hikari.GatewayBot, guild: int | hikari.Guild, role: int | hikari.Role) -> hikari.Role | None:
+    async def role(bot: hikari.GatewayBot, guild: int | hikari.Guild, role: int | hikari.Role, cache: bool = True) -> hikari.Role | None:
         """Retrieve a role from the cache. If not found, fetch it from Discord. Return None if still not found."""
-        return await _role(bot, guild, role, mandatory=False)
+        return await _role(bot, guild, role, mandatory=False, cache=cache)
 
     @staticmethod
-    async def roles(bot: hikari.GatewayBot, guild: int | hikari.Guild) -> typing.Iterable[hikari.Role] | None:
+    async def roles(bot: hikari.GatewayBot, guild: int | hikari.Guild, cache: bool = True) -> typing.Iterable[hikari.Role] | None:
         """Retrieve roles from the cache. If not found, fetch them from Discord. Return None if still not found."""
-        return await _roles(bot, guild, mandatory=False)
+        return await _roles(bot, guild, mandatory=False, cache=cache)
 
     @staticmethod
-    async def top_role(bot: hikari.GatewayBot, guild: int | hikari.Guild, member: int | hikari.Member) -> hikari.Role | None:
+    async def top_role(bot: hikari.GatewayBot, guild: int | hikari.Guild, member: int | hikari.Member, cache: bool = True) -> hikari.Role | None:
         """Retrieve the top role for a member in a guild. If not found, fetch it from Discord. Return None if still not found."""
-        return await _top_role(bot, guild, member, mandatory=False)
+        return await _top_role(bot, guild, member, mandatory=False, cache=cache)
 
     @staticmethod
-    async def booster_role(bot: hikari.GatewayBot, guild: int | hikari.Guild) -> hikari.Role | None:
+    async def booster_role(bot: hikari.GatewayBot, guild: int | hikari.Guild, cache: bool = True) -> hikari.Role | None:
         """Retrieve the booster role for a guild. If not found, fetch it from Discord. Return None if still not found."""
-        return await _booster_role(bot, guild, mandatory=False)
+        return await _booster_role(bot, guild, mandatory=False, cache=cache)
 
     @staticmethod
-    async def emoji(bot: hikari.GatewayBot | None, emoji_id: int | str | hikari.Emoji, guild: int | hikari.Guild | None = None) -> hikari.Emoji | None:
+    async def emoji(bot: hikari.GatewayBot | None, emoji_id: int | str | hikari.Emoji, guild: int | hikari.Guild | None = None, cache: bool = True) -> hikari.Emoji | None:
         """Retrieve an emoji from the cache. If not found, fetch it from Discord. Return None if still not found."""
-        return await _emoji(bot, emoji_id, guild, mandatory=False)
+        return await _emoji(bot, emoji_id, guild, mandatory=False, cache=cache)
 
 
 class Mandatory:
     """Retrieve an object from the cache or fetch it from Discord if not found. Raise an exception if still not found."""
 
     @staticmethod
-    async def guild(bot: hikari.GatewayBot, guild: int | hikari.Guild | None) -> hikari.Guild:
+    async def guild(bot: hikari.GatewayBot, guild: int | hikari.Guild | None, cache: bool = True) -> hikari.Guild:
         """Retrieve a guild from the cache. If not found, fetch it from Discord. Raise an exception if still not found."""
-        guild = await _guild(bot, guild, mandatory=True)
+        guild = await _guild(bot, guild, mandatory=True, cache=cache)
 
         if not guild:
             raise MandatoryGuildNotFound
@@ -90,9 +90,9 @@ class Mandatory:
         return guild
 
     @staticmethod
-    async def user(bot: hikari.GatewayBot, user: int | hikari.User) -> hikari.User:
+    async def user(bot: hikari.GatewayBot, user: int | hikari.User, cache: bool = True) -> hikari.User:
         """Retrieve a user from the cache. If not found, fetch it from Discord. Raise an exception if still not found."""
-        resolved_user = await _user(bot, user, mandatory=True)
+        resolved_user = await _user(bot, user, mandatory=True, cache=cache)
 
         if not resolved_user:
             raise MandatoryUserNotFound
@@ -100,9 +100,9 @@ class Mandatory:
         return resolved_user
 
     @staticmethod
-    async def member(bot: hikari.GatewayBot, guild: int | hikari.Guild, user: int | hikari.User) -> hikari.Member:
+    async def member(bot: hikari.GatewayBot, guild: int | hikari.Guild, user: int | hikari.User, cache: bool = True) -> hikari.Member:
         """Retrieve a member from the cache. If not found, fetch it from Discord. Raise an exception if still not found."""
-        resolved_member = await _member(bot, guild, user, mandatory=True)
+        resolved_member = await _member(bot, guild, user, mandatory=True, cache=cache)
 
         if not resolved_member:
             raise MandatoryMemberNotFound
@@ -110,9 +110,9 @@ class Mandatory:
         return resolved_member
 
     @staticmethod
-    async def members(bot: hikari.GatewayBot, guild: int | hikari.Guild) -> typing.Iterable[hikari.Member]:
+    async def members(bot: hikari.GatewayBot, guild: int | hikari.Guild, cache: bool = True) -> typing.Iterable[hikari.Member]:
         """Retrieve members from the cache. If not found, fetch them from Discord. Raise an exception if still not found."""
-        resolved_members = await _members(bot, guild, mandatory=True)
+        resolved_members = await _members(bot, guild, mandatory=True, cache=cache)
 
         if not resolved_members:
             raise MandatoryMemberNotFound
@@ -120,9 +120,9 @@ class Mandatory:
         return resolved_members
 
     @staticmethod
-    async def boosters(bot: hikari.GatewayBot, guild: int | hikari.Guild) -> list[hikari.Member]:
+    async def boosters(bot: hikari.GatewayBot, guild: int | hikari.Guild, cache: bool = True) -> list[hikari.Member]:
         """Retrieve boosters for a guild from the cache. If not found, fetch them from Discord. Raise an exception if still not found."""
-        resolved_boosters = await _boosters(bot, guild, mandatory=True)
+        resolved_boosters = await _boosters(bot, guild, mandatory=True, cache=cache)
 
         if not resolved_boosters:
             raise MandatoryMemberNotFound
@@ -130,9 +130,9 @@ class Mandatory:
         return resolved_boosters
 
     @staticmethod
-    async def channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel) -> hikari.PermissibleGuildChannel | hikari.GuildThreadChannel:
+    async def channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel, cache: bool = True) -> hikari.PermissibleGuildChannel | hikari.GuildThreadChannel:
         """Retrieve a guild channel from the cache. If not found, fetch it from Discord. Raise an exception if still not found."""
-        resolved_channel = await _channel(bot, channel, mandatory=True)
+        resolved_channel = await _channel(bot, channel, mandatory=True, cache=cache)
 
         if not resolved_channel:
             raise MandatoryChannelNotFound
@@ -140,9 +140,9 @@ class Mandatory:
         return resolved_channel
 
     @staticmethod
-    async def channels(bot: hikari.GatewayBot, guild: int | hikari.Guild, channel_type: hikari.ChannelType | None) -> typing.Iterable[hikari.GuildChannel]:
+    async def channels(bot: hikari.GatewayBot, guild: int | hikari.Guild, channel_type: hikari.ChannelType | None, cache: bool = True) -> typing.Iterable[hikari.GuildChannel]:
         """Retrieve guild channels from the cache. If not found, fetch them from Discord. Optionally filters by channel type. Raise an exception if still not found."""
-        resolved_channels = await _channels(bot, guild, channel_type, mandatory=True)
+        resolved_channels = await _channels(bot, guild, channel_type, mandatory=True, cache=cache)
 
         if not resolved_channels:
             raise MandatoryChannelNotFound
@@ -150,9 +150,9 @@ class Mandatory:
         return resolved_channels
 
     @staticmethod
-    async def role(bot: hikari.GatewayBot, guild: int | hikari.Guild, role: int | hikari.Role) -> hikari.Role:
+    async def role(bot: hikari.GatewayBot, guild: int | hikari.Guild, role: int | hikari.Role, cache: bool = True) -> hikari.Role:
         """Retrieve a role from the cache. If not found, fetch it from Discord. Raise an exception if still not found."""
-        resolved_role = await _role(bot, guild, role, mandatory=True)
+        resolved_role = await _role(bot, guild, role, mandatory=True, cache=cache)
 
         if not resolved_role:
             raise MandatoryRoleNotFound
@@ -160,9 +160,9 @@ class Mandatory:
         return resolved_role
 
     @staticmethod
-    async def roles(bot: hikari.GatewayBot, guild: int | hikari.Guild) -> typing.Iterable[hikari.Role]:
+    async def roles(bot: hikari.GatewayBot, guild: int | hikari.Guild, cache: bool = True) -> typing.Iterable[hikari.Role]:
         """Retrieve roles from the cache. If not found, fetch them from Discord. Raise an exception if still not found."""
-        resolved_roles = await _roles(bot, guild, mandatory=True)
+        resolved_roles = await _roles(bot, guild, mandatory=True, cache=cache)
 
         if not resolved_roles:
             raise MandatoryRoleNotFound
@@ -170,9 +170,9 @@ class Mandatory:
         return resolved_roles
 
     @staticmethod
-    async def top_role(bot: hikari.GatewayBot, guild: int | hikari.Guild, member: int | hikari.Member) -> hikari.Role:
+    async def top_role(bot: hikari.GatewayBot, guild: int | hikari.Guild, member: int | hikari.Member, cache: bool = True) -> hikari.Role:
         """Retrieve the top role for a member in a guild. If not found, fetch it from Discord. Raise an exception if still not found."""
-        resolved_top_role = await _top_role(bot, guild, member, mandatory=True)
+        resolved_top_role = await _top_role(bot, guild, member, mandatory=True, cache=cache)
 
         if not resolved_top_role:
             raise MandatoryRoleNotFound
@@ -180,9 +180,9 @@ class Mandatory:
         return resolved_top_role
 
     @staticmethod
-    async def booster_role(bot: hikari.GatewayBot, guild: int | hikari.Guild) -> hikari.Role:
+    async def booster_role(bot: hikari.GatewayBot, guild: int | hikari.Guild, cache: bool = True) -> hikari.Role:
         """Retrieve the booster role for a guild. If not found, fetch it from Discord. Raise an exception if still not found."""
-        resolved_role = await _booster_role(bot, guild, mandatory=True)
+        resolved_role = await _booster_role(bot, guild, mandatory=True, cache=cache)
 
         if not resolved_role:
             raise MandatoryRoleNotFound
@@ -190,9 +190,9 @@ class Mandatory:
         return resolved_role
 
     @staticmethod
-    async def emoji(bot: hikari.GatewayBot | None, emoji_id: int | str | hikari.Emoji, guild: int | hikari.Guild | None) -> hikari.Emoji:
+    async def emoji(bot: hikari.GatewayBot | None, emoji_id: int | str | hikari.Emoji, guild: int | hikari.Guild | None, cache: bool = True) -> hikari.Emoji:
         """Retrieve an emoji from the cache. If not found, fetch it from Discord. Raise an exception if still not found."""
-        resolved_emoji = await _emoji(bot, emoji_id, guild, mandatory=True)
+        resolved_emoji = await _emoji(bot, emoji_id, guild, mandatory=True, cache=cache)
 
         if not resolved_emoji:
             raise MandatoryEmojiNotFound
@@ -200,11 +200,11 @@ class Mandatory:
         return resolved_emoji
 
 
-async def _guild(bot: hikari.GatewayBot, guild: int | hikari.Guild | None, mandatory: bool = False) -> hikari.Guild | None:
+async def _guild(bot: hikari.GatewayBot, guild: int | hikari.Guild | None, mandatory: bool = False, cache: bool = True) -> hikari.Guild | None:
     try:
         if not guild:
             raise MandatoryGuildNotFound
-        resolved_guild = bot.cache.get_guild(guild) or (await bot.rest.fetch_guild(guild))
+        resolved_guild = (bot.cache.get_guild(guild) if cache else None) or (await bot.rest.fetch_guild(guild))
     except hikari.NotFoundError:
         resolved_guild = None
 
@@ -221,9 +221,9 @@ async def _ban(bot: hikari.GatewayBot, guild: int | hikari.Guild, member: int | 
         return None
 
 
-async def _user(bot: hikari.GatewayBot, user: int | hikari.User, mandatory: bool = False) -> hikari.User | None:
+async def _user(bot: hikari.GatewayBot, user: int | hikari.User, mandatory: bool = False, cache: bool = True) -> hikari.User | None:
     try:
-        resolved_user = bot.cache.get_user(user) or (await bot.rest.fetch_user(user))
+        resolved_user = (bot.cache.get_user(user) if cache else None) or (await bot.rest.fetch_user(user))
     except hikari.NotFoundError:
         resolved_user = None
 
@@ -233,9 +233,9 @@ async def _user(bot: hikari.GatewayBot, user: int | hikari.User, mandatory: bool
     return resolved_user
 
 
-async def _member(bot: hikari.GatewayBot, guild: int | hikari.Guild, user: int | hikari.User, mandatory: bool = False) -> hikari.Member | None:
+async def _member(bot: hikari.GatewayBot, guild: int | hikari.Guild, user: int | hikari.User, mandatory: bool = False, cache: bool = True) -> hikari.Member | None:
     try:
-        resolved_member = bot.cache.get_member(guild, user) or (await bot.rest.fetch_member(guild, user))
+        resolved_member = (bot.cache.get_member(guild, user) if cache else None) or (await bot.rest.fetch_member(guild, user))
     except hikari.NotFoundError:
         resolved_member = None
 
@@ -245,9 +245,9 @@ async def _member(bot: hikari.GatewayBot, guild: int | hikari.Guild, user: int |
     return resolved_member
 
 
-async def _members(bot: hikari.GatewayBot, guild: int | hikari.Guild, mandatory: bool = False) -> typing.Iterable[hikari.Member] | None:
+async def _members(bot: hikari.GatewayBot, guild: int | hikari.Guild, mandatory: bool = False, cache: bool = True) -> typing.Iterable[hikari.Member] | None:
     try:
-        resolved_members = bot.cache.get_members_view_for_guild(guild if isinstance(guild, int) else guild.id).values() or (await bot.rest.fetch_members(guild))
+        resolved_members = (bot.cache.get_members_view_for_guild(guild if isinstance(guild, int) else guild.id).values() if cache else None) or (await bot.rest.fetch_members(guild))
     except hikari.NotFoundError:
         resolved_members = None
 
@@ -257,9 +257,9 @@ async def _members(bot: hikari.GatewayBot, guild: int | hikari.Guild, mandatory:
     return resolved_members
 
 
-async def _boosters(bot: hikari.GatewayBot, guild: int | hikari.Guild, mandatory: bool = False) -> list[hikari.Member] | None:
+async def _boosters(bot: hikari.GatewayBot, guild: int | hikari.Guild, mandatory: bool = False, cache: bool = True) -> list[hikari.Member] | None:
     try:
-        resolved_members = (await _members(bot, guild)) or []
+        resolved_members = (await _members(bot, guild, mandatory, cache)) or []
         resolved_boosters = [member for member in resolved_members if member.premium_since] or None
     except hikari.NotFoundError:
         resolved_boosters = None
@@ -270,9 +270,9 @@ async def _boosters(bot: hikari.GatewayBot, guild: int | hikari.Guild, mandatory
     return resolved_boosters
 
 
-async def _channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel, mandatory: bool = False) -> hikari.PermissibleGuildChannel | hikari.GuildThreadChannel | None:
+async def _channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel, mandatory: bool = False, cache: bool = True) -> hikari.PermissibleGuildChannel | hikari.GuildThreadChannel | None:
     try:
-        resolved_channel = bot.cache.get_guild_channel(channel) or bot.cache.get_thread(channel) or (await bot.rest.fetch_channel(channel))
+        resolved_channel = ((bot.cache.get_guild_channel(channel) or bot.cache.get_thread(channel)) if cache else None) or (await bot.rest.fetch_channel(channel))
     except hikari.NotFoundError:
         resolved_channel = None
 
@@ -282,9 +282,9 @@ async def _channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel, m
     return resolved_channel
 
 
-async def _channels(bot: hikari.GatewayBot, guild: int | hikari.Guild, channel_type: hikari.ChannelType | None = None, mandatory: bool = False) -> typing.Iterable[hikari.GuildChannel] | None:
+async def _channels(bot: hikari.GatewayBot, guild: int | hikari.Guild, channel_type: hikari.ChannelType | None = None, mandatory: bool = False, cache: bool = True) -> typing.Iterable[hikari.GuildChannel] | None:
     try:
-        resolved_channels = bot.cache.get_guild_channels_view_for_guild(guild).values() or (await bot.rest.fetch_guild_channels(guild))
+        resolved_channels = (bot.cache.get_guild_channels_view_for_guild(guild).values() if cache else None) or (await bot.rest.fetch_guild_channels(guild))
         resolved_filtered = [channel for channel in resolved_channels if not channel_type or channel.type is channel_type] or None
     except hikari.NotFoundError:
         resolved_filtered = None
@@ -295,13 +295,13 @@ async def _channels(bot: hikari.GatewayBot, guild: int | hikari.Guild, channel_t
     return resolved_filtered
 
 
-async def _role(bot: hikari.GatewayBot, guild: int | hikari.Guild, role: int | hikari.Role, mandatory: bool = False) -> hikari.Role | None:
+async def _role(bot: hikari.GatewayBot, guild: int | hikari.Guild, role: int | hikari.Role, mandatory: bool = False, cache: bool = True) -> hikari.Role | None:
     try:
         role_id = role if isinstance(role, int) else role.id
         resolved_role = bot.cache.get_role(role_id)
 
         if not resolved_role:
-            roles = (await _roles(bot, guild)) or []
+            roles = (await _roles(bot, guild, mandatory, cache)) or []
 
             for role in roles:
                 if role.id == role_id:
@@ -316,9 +316,9 @@ async def _role(bot: hikari.GatewayBot, guild: int | hikari.Guild, role: int | h
     return resolved_role
 
 
-async def _roles(bot: hikari.GatewayBot, guild: int | hikari.Guild, mandatory: bool = False) -> typing.Iterable[hikari.Role] | None:
+async def _roles(bot: hikari.GatewayBot, guild: int | hikari.Guild, mandatory: bool = False, cache: bool = True) -> typing.Iterable[hikari.Role] | None:
     try:
-        resolved_roles = bot.cache.get_roles_view_for_guild(guild).values() or (await bot.rest.fetch_roles(guild))
+        resolved_roles = (bot.cache.get_roles_view_for_guild(guild).values() if cache else None) or (await bot.rest.fetch_roles(guild))
     except hikari.NotFoundError:
         resolved_roles = None
 
@@ -328,14 +328,14 @@ async def _roles(bot: hikari.GatewayBot, guild: int | hikari.Guild, mandatory: b
     return resolved_roles
 
 
-async def _top_role(bot: hikari.GatewayBot, guild: int | hikari.Guild, member: int | hikari.Member, mandatory: bool = False) -> hikari.Role | None:
+async def _top_role(bot: hikari.GatewayBot, guild: int | hikari.Guild, member: int | hikari.Member, mandatory: bool = False, cache: bool = True) -> hikari.Role | None:
     try:
         if isinstance(member, int):
-            resolved_member = typing.cast(hikari.Member, await _member(bot, guild, member, mandatory=True))
+            resolved_member = typing.cast(hikari.Member, await _member(bot, guild, member, mandatory=True, cache=cache))
         else:
             resolved_member = member
 
-        top_role = resolved_member.get_top_role()
+        top_role = resolved_member.get_top_role() if cache else None
 
         if not top_role:
             roles = await resolved_member.fetch_roles()
@@ -349,10 +349,10 @@ async def _top_role(bot: hikari.GatewayBot, guild: int | hikari.Guild, member: i
     return top_role
 
 
-async def _booster_role(bot: hikari.GatewayBot, guild: int | hikari.Guild, mandatory: bool = False) -> hikari.Role | None:
+async def _booster_role(bot: hikari.GatewayBot, guild: int | hikari.Guild, mandatory: bool = False, cache: bool = True) -> hikari.Role | None:
     try:
         resolved_role = None
-        roles = (await _roles(bot, guild)) or []
+        roles = (await _roles(bot, guild, mandatory, cache)) or []
 
         for role in roles:
             if role.is_premium_subscriber_role:
@@ -367,7 +367,7 @@ async def _booster_role(bot: hikari.GatewayBot, guild: int | hikari.Guild, manda
     return resolved_role
 
 
-async def _emoji(bot: hikari.GatewayBot | None, emoji_id: int | str | hikari.Emoji, guild: int | hikari.Guild | None = None, mandatory: bool = False) -> hikari.Emoji | None:
+async def _emoji(bot: hikari.GatewayBot | None, emoji_id: int | str | hikari.Emoji, guild: int | hikari.Guild | None = None, mandatory: bool = False, cache: bool = True) -> hikari.Emoji | None:
     try:
         resolved_emoji = None
 
@@ -387,7 +387,7 @@ async def _emoji(bot: hikari.GatewayBot | None, emoji_id: int | str | hikari.Emo
                     resolved_emoji = hikari.UnicodeEmoji.parse(unicode_char)
             except ValueError:
                 if bot:
-                    resolved_emoji = bot.cache.get_emoji(emoji_id)
+                    resolved_emoji = bot.cache.get_emoji(emoji_id) if cache else None
 
                     if not resolved_emoji and guild:
                         resolved_emoji = await bot.rest.fetch_emoji(guild, emoji_id)
