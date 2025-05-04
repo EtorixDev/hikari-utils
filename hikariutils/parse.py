@@ -46,6 +46,8 @@ def human_time(date_and_time: str) -> tuple[float, int, int, str, str] | tuple[N
                 if not target_date or not target_date.tzname() or not target_date.utcoffset():
                     return (None, None, None, None, None)
 
+                tz_name = target_date.tzname()
+
         if tz_name and isinstance(target_date, datetime.datetime):
             # Extract Timezone + Abbreviation + Offset
             target_timezone_name = typing.cast(str, tz_name).replace("\\", "")

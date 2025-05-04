@@ -21,3 +21,6 @@ dev = [
 
 [tool.ruff]
 line-length = 320
+
+[tool.uv.sources]
+dateparser = { git = "https://github.com/EtorixDev/dateparser/", branch = "all-edits" }

@@ -105,16 +105,12 @@ wheels = [
 [[package]]
 name = "dateparser"
 version = "1.2.1"
-source = { registry = "https://pypi.org/simple" }
+source = { git = "https://github.com/EtorixDev/dateparser/?branch=all-edits#2dd46e23fda28983ee61fc594358be34418a47a5" }
 dependencies = [
     { name = "python-dateutil" },
     { name = "pytz" },
     { name = "regex" },
     { name = "tzlocal" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/bd/3f/d3207a05f5b6a78c66d86631e60bfba5af163738a599a5b9aa2c2737a09e/dateparser-1.2.1.tar.gz", hash = "sha256:7e4919aeb48481dbfc01ac9683c8e20bfe95bb715a38c1e9f6af889f4f30ccc3", size = 309924 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/cf/0a/981c438c4cd84147c781e4e96c1d72df03775deb1bc76c5a6ee8afa89c62/dateparser-1.2.1-py3-none-any.whl", hash = "sha256:bdcac262a467e6260030040748ad7c10d6bacd4f3b9cdb4cfd2251939174508c", size = 295658 },
 ]
 
 [[package]]
@@ -220,7 +216,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "dateparser", specifier = ">=1.2.1" },
+    { name = "dateparser", git = "https://github.com/EtorixDev/dateparser/?branch=all-edits" },
     { name = "emoji", specifier = ">=2.14.1" },
     { name = "hikari", specifier = ">=2.3.0" },
     { name = "regex", specifier = ">=2024.11.6" },
