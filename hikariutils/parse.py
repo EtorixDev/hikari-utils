@@ -39,10 +39,12 @@ def human_time(date_and_time: str) -> tuple[float, int, int, str, str] | tuple[N
             else:
                 target_date = dateparser.parse(date_and_time)
 
-                if not target_date or target_date.tzname() is None or target_date.utcoffset() is None:
-                    return (None, None, None, None, None)
+                if target_date and not target_date.tzname():
+                    date_and_time += " UTC"
+                    target_date = dateparser.parse(date_and_time)
 
-                tz_name = target_date.tzname()
+                if not target_date or not target_date.tzname() or not target_date.utcoffset():
+                    return (None, None, None, None, None)
 
         if tz_name and isinstance(target_date, datetime.datetime):
             # Extract Timezone + Abbreviation + Offset
