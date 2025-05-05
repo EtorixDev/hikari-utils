@@ -16,7 +16,7 @@ def snowflake_to_datetime(id: int, source: typing.Literal["DISCORD", "TWITTER", 
 
 def jump_url(guild_id: int, channel_id: int | None = None, message_id: int | None = None) -> str:
     """Build a jump url for a Discord channel or message."""
-    return f"https://discord.com/channels/{guild_id}" + f"/{channel_id}" if channel_id else "" + f"/{message_id}" if message_id else ""
+    return f"https://discord.com/channels/{guild_id}" + (f"/{channel_id}" if channel_id else "") + (f"/{message_id}" if message_id else "")
 
 
 def seconds(seconds: float, style: typing.Literal["Long", "Short", "Single"] = "Short") -> str:
