@@ -3,7 +3,7 @@ import typing
 import emoji
 import hikari
 
-from hikariutils.errors import MandatoryChannelNotFound, MandatoryEmojiNotFound, MandatoryGuildNotFound, MandatoryMemberNotFound, MandatoryRoleNotFound, MandatoryUserNotFound
+from hikariutils.errors import MandatoryBanNotFound, MandatoryChannelNotFound, MandatoryEmojiNotFound, MandatoryGuildNotFound, MandatoryMemberNotFound, MandatoryRoleNotFound, MandatoryUserNotFound
 
 
 class Optional:
@@ -88,6 +88,16 @@ class Mandatory:
             raise MandatoryGuildNotFound
 
         return guild
+
+    @staticmethod
+    async def ban(bot: hikari.GatewayBot, guild: int | hikari.Guild, member: int | hikari.User) -> hikari.GuildBan:
+        """Fetch a ban for a guild member. Raise an exception if not found."""
+        resolved_ban = await _ban(bot, guild, member)
+
+        if not resolved_ban:
+            raise MandatoryBanNotFound
+
+        return resolved_ban
 
     @staticmethod
     async def user(bot: hikari.GatewayBot, user: int | hikari.User, cache: bool = True) -> hikari.User:

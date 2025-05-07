@@ -6,8 +6,12 @@ class MandatoryGuildNotFound(HikariUtilsError):
     """Exception raised when a guild is needed but couldn't be found in the cache or fetched from Discord."""
 
 
+class MandatoryBanNotFound(HikariUtilsError):
+    """Exception raised when a ban is needed but couldn't be found in the cache or fetched from Discord."""
+
+
 class MandatoryMemberNotFound(HikariUtilsError):
-    """Exception raised when a member is needed but couldn't be found in the cache or fetched from Discord."""
+    """Exception raised when a member is needed but couldn't be fetched from Discord."""
 
 
 class MandatoryUserNotFound(HikariUtilsError):
