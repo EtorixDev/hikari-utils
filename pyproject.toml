@@ -7,20 +7,20 @@ license = "MIT"
 readme = "README.md"
 requires-python = ">=3.12,<3.14"
 dependencies = [
-    "dateparser>=1.2.1",
+    "dateparser",
     "emoji>=2.14.1",
-    "hikari>=2.3.0",
+    "hikari>=2.3.2",
     "regex>=2024.11.6",
-    "whenever>=0.7.3",
+    "whenever>=0.8.0",
 ]
 
 [dependency-groups]
 dev = [
-    "ruff>=0.11.7",
+    "ruff>=0.11.9",
 ]
 
 [tool.ruff]
 line-length = 320
 
 [tool.uv.sources]
-dateparser = { git = "https://github.com/EtorixDev/dateparser/", branch = "all-edits" }
+dateparser = { git = "https://github.com/EtorixDev/dateparser" }
