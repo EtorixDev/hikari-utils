@@ -19,6 +19,11 @@ def jump_url(guild_id: int, channel_id: int | None = None, message_id: int | Non
     return f"https://discord.com/channels/{guild_id}" + (f"/{channel_id}" if channel_id else "") + (f"/{message_id}" if message_id else "")
 
 
+def jump_hyperlink(guild_id: int, channel_id: int | None = None, message_id: int | None = None, text: str | None = None) -> str:
+    """Build a jump hyperlink for a Discord channel or message."""
+    return f"[{code_or_sanitize(text) if text else '`Jump`'}](<{jump_url(guild_id, channel_id, message_id)}>)"
+
+
 def seconds(seconds: float, style: typing.Literal["Long", "Short", "Single"] = "Short") -> str:
     """
     Convert the provided seconds to one of the following styles:
