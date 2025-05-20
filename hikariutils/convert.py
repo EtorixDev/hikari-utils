@@ -16,11 +16,12 @@ def snowflake_to_datetime(id: int, source: typing.Literal["DISCORD", "TWITTER", 
 
 def jump_url(guild_id: int, channel_id: int | None = None, message_id: int | None = None) -> str:
     """Build a jump url for a Discord channel or message."""
-    return f"https://discord.com/channels/{guild_id}" + (f"/{channel_id}" if channel_id else "") + (f"/{message_id}" if message_id else "")
+    return f"https://discord.com/channels/{guild_id}" + (f"/{channel_id}" if channel_id else "") + (f"/{message_id}" if channel_id and message_id else "")
 
 
 def jump_hyperlink(guild_id: int, channel_id: int | None = None, message_id: int | None = None, text: str | None = None) -> str:
     """Build a jump hyperlink for a Discord channel or message."""
+    text = ("#" + text) if text and channel_id else text
     return f"[{code_or_sanitize(text) if text else '`Jump`'}](<{jump_url(guild_id, channel_id, message_id)}>)"
 
 
