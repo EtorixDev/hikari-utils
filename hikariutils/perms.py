@@ -1,3 +1,5 @@
+from typing import cast
+
 import hikari
 
 from hikariutils.getfetch import Mandatory
@@ -21,6 +23,9 @@ async def resolve_perms(bot: hikari.GatewayBot, member: hikari.Member, channel: 
 
     if permissions & hikari.Permissions.ADMINISTRATOR:
         return hikari.Permissions.all_permissions()
+
+    if isinstance(channel, hikari.GuildThreadChannel):
+        channel = cast(hikari.PermissibleGuildChannel, await Mandatory.channel(bot, channel.parent_id))
 
     if not isinstance(channel, hikari.PermissibleGuildChannel):
         return permissions
