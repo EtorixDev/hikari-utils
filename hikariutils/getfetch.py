@@ -140,7 +140,7 @@ class Mandatory:
         return resolved_boosters
 
     @staticmethod
-    async def channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel, cache: bool = True) -> hikari.GuildChannel | hikari.DMChannel | None:
+    async def channel(bot: hikari.GatewayBot, channel: int | hikari.GuildChannel, cache: bool = True) -> hikari.GuildChannel | hikari.DMChannel:
         """Retrieve a guild channel from the cache. If not found, fetch it from Discord. Raise an exception if still not found."""
         resolved_channel = await _channel(bot, channel, mandatory=True, cache=cache)
 
