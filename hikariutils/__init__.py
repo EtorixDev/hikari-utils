@@ -1,1 +1,1 @@
-"""A random assortment of utilities for the hikari Discord API wrapper."""
+"""An untested, overly verbose, random assortment of utilities for the hikari Discord API wrapper."""

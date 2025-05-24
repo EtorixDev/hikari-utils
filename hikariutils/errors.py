@@ -2,6 +2,10 @@ class HikariUtilsError(Exception):
     """Base class for hikari-utils exceptions."""
 
 
+class InvalidBot(HikariUtilsError):
+    """Exception raised when an incompatible bot type was passed to a method."""
+
+
 class MandatoryGuildNotFound(HikariUtilsError):
     """Exception raised when a guild is needed but couldn't be found in the cache or fetched from Discord."""
 

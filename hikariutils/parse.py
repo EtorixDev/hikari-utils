@@ -18,11 +18,19 @@ def is_float(term: str) -> bool:
         return False
 
 
-def human_time(date_and_time: str) -> tuple[float, int, int, str, str] | tuple[None, None, None, None, None]:
-    """Find the timestamp and timezone information for a human time representation."""
+def human_time(date_and_time: str) -> tuple[float, float, str, str] | tuple[None, None, None, None]:
+    """Find the timestamp and timezone information for a human time representation.
+
+    Returns a tuple containing:
+    - The millisecond UNIX timestamp of the date and time.
+    - The difference in seconds from the current time.
+    - The timezone name.
+    - The UTC offset.
+    """
     try:
         tz_name: str | None = None
         target_date: whenever.ZonedDateTime | datetime.datetime | None = None
+        target_date_timestamp: float | None = None
 
         if is_float(date_and_time):
             date_and_time_float: float = float(date_and_time)
@@ -33,9 +41,12 @@ def human_time(date_and_time: str) -> tuple[float, int, int, str, str] | tuple[N
                 target_date = whenever.ZonedDateTime.from_timestamp(date_and_time_float / 1000, tz="UTC")
             else:
                 target_date = whenever.ZonedDateTime.from_timestamp(date_and_time_float, tz="UTC")
+
+            target_date_timestamp = target_date.timestamp_millis()
         else:
             if any([term in date_and_time.lower() for term in ["x.com", "twitter.com"]]):
                 target_date = snowflake_to_datetime(int(date_and_time), "TWITTER")
+                target_date_timestamp = target_date.timestamp_millis()
             else:
                 target_date = dateparser.parse(date_and_time)
 
@@ -44,9 +55,10 @@ def human_time(date_and_time: str) -> tuple[float, int, int, str, str] | tuple[N
                     target_date = dateparser.parse(date_and_time)
 
                 if not target_date or not target_date.tzname() or not target_date.utcoffset():
-                    return (None, None, None, None, None)
+                    return (None, None, None, None)
 
                 tz_name = target_date.tzname()
+                target_date_timestamp = target_date.timestamp() * 1000
 
         if tz_name and isinstance(target_date, datetime.datetime):
             # Extract Timezone + Abbreviation + Offset
@@ -63,13 +75,12 @@ def human_time(date_and_time: str) -> tuple[float, int, int, str, str] | tuple[N
             target_timezone_offset = "+00:00"
 
         if not target_date:
-            return (None, None, None, None, None)
+            return (None, None, None, None)
 
         # Content Output Display
-        target_date_timestamp = target_date.timestamp() - UNIX_EPOCH.timestamp_millis()
-        target_date_unix = int(target_date_timestamp)
-        difference_in_seconds = int(target_date_timestamp - whenever.Instant.now().timestamp())
+        target_date_unix = (target_date_timestamp - UNIX_EPOCH.timestamp_millis()) / 1000
+        difference_in_seconds = max(round(target_date_timestamp - whenever.Instant.now().timestamp(), 3), 0)
 
-        return (target_date_timestamp, target_date_unix, difference_in_seconds, target_timezone_name, target_timezone_offset)
+        return (target_date_unix, difference_in_seconds, target_timezone_name, target_timezone_offset)
     except Exception:
-        return (None, None, None, None, None)
+        return (None, None, None, None)

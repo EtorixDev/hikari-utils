@@ -1,7 +1,7 @@
 [project]
 name = "hikari-utils"
-version = "0.2.1"
-description = "A random assortment of utilities for the hikari Discord API wrapper."
+version = "0.3.1"
+description = "An untested, overly verbose, random assortment of utilities for the hikari Discord API wrapper."
 authors = [{name = "Etorix", email = "admin@etorix.dev"}]
 license = "MIT"
 readme = "README.md"
@@ -11,12 +11,12 @@ dependencies = [
     "emoji>=2.14.1",
     "hikari>=2.3.3",
     "regex>=2024.11.6",
-    "whenever>=0.8.0",
+    "whenever>=0.8.3",
 ]
 
 [dependency-groups]
 dev = [
-    "ruff>=0.11.10",
+    "ruff>=0.11.11",
 ]
 
 [tool.ruff]
