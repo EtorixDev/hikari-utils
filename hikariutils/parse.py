@@ -18,11 +18,12 @@ def is_float(term: str) -> bool:
         return False
 
 
-def human_time(date_and_time: str) -> tuple[float, float, str, str] | tuple[None, None, None, None]:
+def human_time(date_and_time: str) -> tuple[int, int, float, str, str] | tuple[None, None, None, None, None]:
     """Find the timestamp and timezone information for a human time representation.
 
     Returns a tuple containing:
-    - The millisecond UNIX timestamp of the date and time.
+    - The UNIX timestamp in seconds.
+    - The UNIX timestamp in milliseconds.
     - The difference in seconds from the current time.
     - The timezone name.
     - The UTC offset.
@@ -55,7 +56,7 @@ def human_time(date_and_time: str) -> tuple[float, float, str, str] | tuple[None
                     target_date = dateparser.parse(date_and_time)
 
                 if not target_date or not target_date.tzname() or not target_date.utcoffset():
-                    return (None, None, None, None)
+                    return (None, None, None, None, None)
 
                 tz_name = target_date.tzname()
                 target_date_timestamp = target_date.timestamp() * 1000
@@ -75,12 +76,13 @@ def human_time(date_and_time: str) -> tuple[float, float, str, str] | tuple[None
             target_timezone_offset = "+00:00"
 
         if not target_date:
-            return (None, None, None, None)
+            return (None, None, None, None, None)
 
         # Content Output Display
-        target_date_unix = (target_date_timestamp - UNIX_EPOCH.timestamp_millis()) / 1000
+        target_date_unix_millis = int(target_date_timestamp - UNIX_EPOCH.timestamp_millis())
+        target_date_unix_seconds = int(target_date_unix_millis / 1000)
         difference_in_seconds = max(round(target_date_timestamp - whenever.Instant.now().timestamp(), 3), 0)
 
-        return (target_date_unix, difference_in_seconds, target_timezone_name, target_timezone_offset)
+        return (target_date_unix_seconds, target_date_unix_millis, difference_in_seconds, target_timezone_name, target_timezone_offset)
     except Exception:
-        return (None, None, None, None)
+        return (None, None, None, None, None)
