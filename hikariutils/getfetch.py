@@ -361,7 +361,7 @@ class Optional:
             bot: hikari.GatewayBot,
             guild: int | hikari.Guild | None,
         ) -> typing.Mapping[hikari.Snowflake, hikari.Member] | None:
-            """Retrieve members from the cache. Return None if not found."""
+            """Retrieve boosters from the cache. Return None if not found."""
             return await _cache_boosters(bot, guild)
 
         @staticmethod
@@ -649,7 +649,7 @@ class Optional:
             bot: hikari.GatewayBot | hikari.RESTBot,
             guild: int | hikari.Guild | None,
         ) -> typing.Mapping[hikari.Snowflake, hikari.Member] | None:
-            """Retrieve members by fetching them from Discord. Return None if not found."""
+            """Retrieve boosters by fetching them from Discord. Return None if not found."""
             return await _rest_boosters(bot, guild)
 
         @staticmethod
@@ -979,7 +979,7 @@ class Mandatory:
             bot: hikari.GatewayBot | hikari.RESTBot,
             guild: int | hikari.Guild | None,
         ) -> typing.Mapping[hikari.Snowflake, hikari.Member]:
-            """Retrieve members from the cache. If not found, fetch them from Discord. Raise an exception if still not found."""
+            """Retrieve boosters from the cache. If not found, fetch them from Discord. Raise an exception if still not found."""
             if not (resolved_members := await _either_boosters(bot, guild)):
                 raise MandatoryMemberNotFound
 
@@ -1394,7 +1394,7 @@ class Mandatory:
             bot: hikari.GatewayBot,
             guild: int | hikari.Guild | None,
         ) -> typing.Mapping[hikari.Snowflake, hikari.Member]:
-            """Retrieve members from the cache. Raise an exception if not found."""
+            """Retrieve boosters from the cache. Raise an exception if not found."""
             if not (resolved_members := await _cache_boosters(bot, guild)):
                 raise MandatoryMemberNotFound
 
@@ -1787,7 +1787,7 @@ class Mandatory:
             bot: hikari.GatewayBot | hikari.RESTBot,
             guild: int | hikari.Guild | None,
         ) -> typing.Mapping[hikari.Snowflake, hikari.Member]:
-            """Retrieve members by fetching them from Discord. Raise an exception if not found."""
+            """Retrieve boosters by fetching them from Discord. Raise an exception if not found."""
             if not (resolved_members := await _rest_boosters(bot, guild)):
                 raise MandatoryMemberNotFound
 
