@@ -19,13 +19,13 @@ class Optional:
             return await _either_guild(bot, guild)
 
         @staticmethod
-        async def ban(
+        async def banned(
             bot: hikari.GatewayBot | hikari.RESTBot,
             guild: int | hikari.Guild | None,
             user: int | hikari.User | None,
         ) -> hikari.GuildBan | None:
             """Retrieve a ban by fetching it from Discord. Return None if not found."""
-            return await _rest_ban(bot, guild, user)
+            return await _rest_banned(bot, guild, user)
 
         @staticmethod
         async def user(
@@ -611,13 +611,13 @@ class Optional:
             return await _rest_guild(bot, guild)
 
         @staticmethod
-        async def ban(
+        async def banned(
             bot: hikari.GatewayBot | hikari.RESTBot,
             guild: int | hikari.Guild | None,
             user: int | hikari.User | None,
         ) -> hikari.GuildBan | None:
             """Retrieve a ban by fetching it from Discord. Return None if not found."""
-            return await _rest_ban(bot, guild, user)
+            return await _rest_banned(bot, guild, user)
 
         @staticmethod
         async def user(
@@ -929,13 +929,13 @@ class Mandatory:
             return resolved_guild
 
         @staticmethod
-        async def ban(
+        async def banned(
             bot: hikari.GatewayBot | hikari.RESTBot,
             guild: int | hikari.Guild | None,
             user: int | hikari.User | None,
         ) -> hikari.GuildBan:
             """Retrieve a ban by fetching it from Discord. Raise an exception if not found."""
-            if not (resolved_ban := await _rest_ban(bot, guild, user)):
+            if not (resolved_ban := await _rest_banned(bot, guild, user)):
                 raise MandatoryBanNotFound
 
             return resolved_ban
@@ -1737,13 +1737,13 @@ class Mandatory:
             return resolved_guild
 
         @staticmethod
-        async def ban(
+        async def banned(
             bot: hikari.GatewayBot | hikari.RESTBot,
             guild: int | hikari.Guild | None,
             user: int | hikari.User | None,
         ) -> hikari.GuildBan:
             """Retrieve a ban by fetching it from Discord. Raise an exception if not found."""
-            if not (resolved_ban := await _rest_ban(bot, guild, user)):
+            if not (resolved_ban := await _rest_banned(bot, guild, user)):
                 raise MandatoryBanNotFound
 
             return resolved_ban
@@ -2186,7 +2186,7 @@ async def _rest_guild(
         return None
 
 
-async def _rest_ban(
+async def _rest_banned(
     bot: hikari.GatewayBot | hikari.RESTBot,
     guild: int | hikari.Guild | None,
     user: int | hikari.User | None,
